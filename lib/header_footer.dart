@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'app_style.dart';
-import 'terms_page.dart';
-import 'privacy_page.dart';
+import 'package:go_router/go_router.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -94,16 +93,15 @@ class _HeaderState extends State<Header> {
                   children: [
                     MenuButton(
                       'Home',
-                      () =>
-                          Navigator.popUntil(context, (route) => route.isFirst),
+                      () => context.go('/'),
                     ),
                     MenuButton(
                       'Terms of Use',
-                      () => navigate(context, const TermsPage()),
+                      () => context.go('/terms'),
                     ),
                     MenuButton(
                       'Privacy Policy',
-                      () => navigate(context, const PrivacyPage()),
+                      () => context.go('/privacy'),
                     ),
                   ],
                 ),
