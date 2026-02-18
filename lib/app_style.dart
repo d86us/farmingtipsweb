@@ -36,7 +36,7 @@ class AppButtons {
     backgroundColor: AppColors.yellow,
     foregroundColor: AppColors.black,
     textStyle: AppTextStyles.button,
-    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+    padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
   );
 }
