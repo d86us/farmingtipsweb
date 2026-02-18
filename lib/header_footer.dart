@@ -40,16 +40,25 @@ class _HeaderState extends State<Header> {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
+                        behavior: HitTestBehavior
+                            .opaque, // Captures clicks on transparent areas
                         onTap: () {
-                          context.go('/'); // navigate home
-                          widget.onLogoTap?.call(); // scroll to top
+                          context.go('/');
+                          widget.onLogoTap?.call();
                           setState(() => menuOpen = false);
                         },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            'assets/FarmingTipsLogo_v1.png',
-                            height: 100,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors
+                              .click, // Changes cursor to a hand/pointer
+                          opaque:
+                              true, // Ensures the cursor changes even over transparent pixels
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              'assets/FarmingTipsLogo_v1.png',
+                              height: 100,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
