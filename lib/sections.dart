@@ -57,7 +57,7 @@ class Section extends StatelessWidget {
         children: [
           ConstrainedBox(
             constraints: const BoxConstraints(
-              maxHeight: 500, // limit image height
+              maxHeight: 700, // limit image height
             ),
             child: Image.asset(
               imageAsset,
