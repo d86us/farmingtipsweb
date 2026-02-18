@@ -6,7 +6,7 @@ import 'app_style.dart';
 import 'package:go_router/go_router.dart';
 
 class Header extends StatefulWidget {
-  final VoidCallback? onLogoTap; // new property
+  final VoidCallback? onLogoTap;
   const Header({super.key, this.onLogoTap});
 
   @override
@@ -37,21 +37,19 @@ class _HeaderState extends State<Header> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior
-                            .opaque, // Captures clicks on transparent areas
-                        onTap: () {
-                          context.go('/');
-                          widget.onLogoTap?.call();
-                          setState(() => menuOpen = false);
-                        },
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors
-                              .click, // Changes cursor to a hand/pointer
-                          opaque:
-                              true, // Ensures the cursor changes even over transparent pixels
+                    // --- LOGO SECTION START ---
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        context.go('/');
+                        widget.onLogoTap?.call();
+                        setState(() => menuOpen = false);
+                      },
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        opaque: true,
+                        child: Material(
+                          color: Colors.transparent, // Ensures hit-testing works
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.asset(
@@ -63,6 +61,7 @@ class _HeaderState extends State<Header> {
                         ),
                       ),
                     ),
+                    // --- LOGO SECTION END ---
                     IconButton(
                       icon: SvgPicture.asset(
                         menuOpen ? 'assets/close.svg' : 'assets/menu.svg',
@@ -77,7 +76,6 @@ class _HeaderState extends State<Header> {
           ),
         ),
         if (menuOpen)
-          // Full-width menu on green background
           Container(
             color: AppColors.background,
             child: Center(
@@ -85,9 +83,18 @@ class _HeaderState extends State<Header> {
                 constraints: const BoxConstraints(maxWidth: 1000),
                 child: Column(
                   children: [
-                    MenuButton('Home', () => context.go('/')),
-                    MenuButton('Terms of Use', () => context.go('/terms')),
-                    MenuButton('Privacy Policy', () => context.go('/privacy')),
+                    MenuButton('Home', () {
+                      context.go('/');
+                      setState(() => menuOpen = false);
+                    }),
+                    MenuButton('Terms of Use', () {
+                      context.go('/terms');
+                      setState(() => menuOpen = false);
+                    }),
+                    MenuButton('Privacy Policy', () {
+                      context.go('/privacy');
+                      setState(() => menuOpen = false);
+                    }),
                   ],
                 ),
               ),
@@ -116,6 +123,7 @@ class _MenuButtonState extends State<MenuButton> {
       onEnter: (_) => setState(() => isHover = true),
       onExit: (_) => setState(() => isHover = false),
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: widget.onTap,
         child: Container(
           width: double.infinity,
@@ -145,13 +153,13 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.background, // page background green
+      color: AppColors.background,
       width: double.infinity,
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1000),
           child: Container(
-            color: AppColors.yellow, // footer box background
+            color: AppColors.yellow,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
             child: Column(
