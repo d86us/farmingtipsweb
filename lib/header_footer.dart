@@ -16,19 +16,6 @@ class _HeaderState extends State<Header> {
 
   void toggleMenu() => setState(() => menuOpen = !menuOpen);
 
-  void navigate(BuildContext context, Widget page) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => page,
-        transitionDuration: const Duration(milliseconds: 500),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-    setState(() => menuOpen = false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,10 +39,8 @@ class _HeaderState extends State<Header> {
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
                         onTap: () {
-                          context.go('/');
-                          setState(
-                            () => menuOpen = false,
-                          ); // also close menu if open
+                          GoRouter.of(context).go('/');
+                          setState(() => menuOpen = false);
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
