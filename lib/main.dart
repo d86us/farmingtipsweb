@@ -67,19 +67,34 @@ class FarmingTipsApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+
+  void scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
-          children: const [
-            Header(),
-            HomeContent(),
-            Footer(),
+          children: [
+            Header(onLogoTap: scrollToTop), // pass callback
+            const HomeContent(),
+            const Footer(),
           ],
         ),
       ),

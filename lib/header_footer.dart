@@ -6,7 +6,9 @@ import 'app_style.dart';
 import 'package:go_router/go_router.dart';
 
 class Header extends StatefulWidget {
-  const Header({super.key});
+  final VoidCallback? onLogoTap; // new property
+  const Header({super.key, this.onLogoTap});
+
   @override
   _HeaderState createState() => _HeaderState();
 }
@@ -39,7 +41,8 @@ class _HeaderState extends State<Header> {
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
                         onTap: () {
-                          GoRouter.of(context).go('/');
+                          context.go('/'); // navigate home
+                          widget.onLogoTap?.call(); // scroll to top
                           setState(() => menuOpen = false);
                         },
                         child: ClipRRect(
