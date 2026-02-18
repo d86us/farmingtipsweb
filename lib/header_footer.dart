@@ -22,10 +22,7 @@ class _HeaderState extends State<Header> {
         pageBuilder: (_, __, ___) => page,
         transitionDuration: const Duration(milliseconds: 500),
         transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
       ),
     );
@@ -54,14 +51,14 @@ class _HeaderState extends State<Header> {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
-                        onTap: () => Navigator.popUntil(
-                          context,
-                          (route) => route.isFirst,
-                        ),
+                        onTap: () {
+                          context.go('/');
+                          setState(
+                            () => menuOpen = false,
+                          ); // also close menu if open
+                        },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            20,
-                          ), // adjust radius as needed
+                          borderRadius: BorderRadius.circular(20),
                           child: Image.asset(
                             'assets/FarmingTipsLogo_v1.png',
                             height: 100,
@@ -91,18 +88,9 @@ class _HeaderState extends State<Header> {
                 constraints: const BoxConstraints(maxWidth: 1000),
                 child: Column(
                   children: [
-                    MenuButton(
-                      'Home',
-                      () => context.go('/'),
-                    ),
-                    MenuButton(
-                      'Terms of Use',
-                      () => context.go('/terms'),
-                    ),
-                    MenuButton(
-                      'Privacy Policy',
-                      () => context.go('/privacy'),
-                    ),
+                    MenuButton('Home', () => context.go('/')),
+                    MenuButton('Terms of Use', () => context.go('/terms')),
+                    MenuButton('Privacy Policy', () => context.go('/privacy')),
                   ],
                 ),
               ),
